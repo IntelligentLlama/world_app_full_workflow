@@ -8,7 +8,7 @@ gcp_zone   = "us-central1-a"
 
 org         = "ycit"
 #environment = "dev"               #value to be prefixed to resources names to differentiate them
-bucket_name = "tf-bucket-ycit021" # Put the desired GCS Bucket name.
+bucket_name = "tf-bucket-devops" # Put the desired GCS Bucket name.
 
 #Network related
 
@@ -25,3 +25,4 @@ master_ipv4_cidr_block_range = "172.16.0.0/28"
 initial_node_count    = 1
 node_preemptible      = true
 gke_pool_machine_type = "e2-small"
+
