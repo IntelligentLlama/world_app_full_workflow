@@ -157,8 +157,8 @@ jobs:
         #====================================#
       - name: Setup gcp info
         env:
-          G_PROJ: ${{ secrets.G_PROJ }}
-          G_B_ACT: ${{ secrets.G_B_ACT }}
+          # G_PROJ: ${{ secrets.G_PROJ }}
+          # G_B_ACT: ${{ secrets.G_B_ACT }}
           GKE_ENV: ${{ env.GKE_ENV }}
         run: |
           cat << EOF >> ./run-modules/create-gke/terraform.tfvars
@@ -226,8 +226,8 @@ jobs:
         #====================================#
       - name: Setup gcp info
         env:
-          G_PROJ: ${{ secrets.G_PROJ }}
-          G_B_ACT: ${{ secrets.G_B_ACT }}
+          # G_PROJ: ${{ secrets.G_PROJ }}
+          # G_B_ACT: ${{ secrets.G_B_ACT }}
           GKE_ENV: ${{ env.GKE_ENV }}
         run: |
           cat << EOF >> ./run-modules/create-gke/terraform.tfvars
