@@ -343,7 +343,7 @@ jobs:
         with:
           owner: 'IntelligentLlama' 
           repository: 'realworld-test-cb'
-          access-token: ${{ secrets.GITPASS }}  
+          access-token: ${{ secrets.GITPAT }}  
       
         #====================================
         # Setup gcloud CLI
