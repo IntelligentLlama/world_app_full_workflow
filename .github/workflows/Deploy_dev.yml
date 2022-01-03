@@ -34,8 +34,11 @@ on:
 # Variable section
 #==============================
 env:
-  PROJECT_ID: ${{ secrets.G_PROJ }}
-  SERVICE_ACCOUNT: ${{ secrets.G_INFO }}
+  # PROJECT_ID: ${{ secrets.G_PROJ }}
+  G_PROJ: ${{ secrets.G_PROJ }} 
+  # SERVICE_ACCOUNT: ${{ secrets.G_INFO }}
+  G_INFO: ${{ secrets.G_INFO }}
+  G_B_ACT: ${{ secrets.G_B_ACT }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ENV: dev
   GKE_CLUSTER: gke-ycit-tformers-default-dev   #terraform output
@@ -69,8 +72,8 @@ jobs:
         #====================================#
       - name: Setup gcp info
         env:
-          G_PROJ: ${{ secrets.G_PROJ }}
-          G_B_ACT: ${{ secrets.G_B_ACT }}
+           # G_PROJ: ${{ secrets.G_PROJ }}
+           # G_B_ACT: ${{ secrets.G_B_ACT }}
           GKE_ENV: ${{ env.GKE_ENV }}
         run: |
           cat << EOF >> ./run-modules/create-gke/terraform.tfvars
@@ -369,7 +372,7 @@ jobs:
         # Push the Docker image to Google Container Registry, for the real world app react-redux
       - name: Publish
         run: |-
-          docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.GITHUB_SHA }}"
+          docker push "gcr.io/$G_PROJ/$IMAGE:${{ env.GITHUB_SHA }}"
 
         #====================================
         # Install realworld app helm chart
