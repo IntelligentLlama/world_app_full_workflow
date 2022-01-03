@@ -40,7 +40,7 @@ env:
   GKE_ENV: dev
   GKE_CLUSTER: gke-ycit-tformers-default-dev   #terraform output
   GKE_REGION: us-central1
-  APP_REPO_OWNER: Vidinci
+  APP_REPO_OWNER: IntelligentLlama
   APP_REPO_NAME: realworld-test-cm
   IMAGE: react-redux
   DEPLOYMENT_NAME: react-redux
