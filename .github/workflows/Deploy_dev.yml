@@ -34,7 +34,7 @@ on:
 # Variable section
 #==============================
 env:
-  # PROJECT_ID: ${{ secrets.G_PROJ }}
+  PROJECT_ID: ${{ secrets.G_PROJ }}
   G_PROJ: ${{ secrets.G_PROJ }} 
   # SERVICE_ACCOUNT: ${{ secrets.G_INFO }}
   G_INFO: ${{ secrets.G_INFO }}
@@ -44,7 +44,7 @@ env:
   GKE_CLUSTER: gke-ycit-tformers-default-dev   #terraform output
   GKE_REGION: us-central1
   APP_REPO_OWNER: IntelligentLlama
-  APP_REPO_NAME: realworld-test-cm
+  APP_REPO_NAME: realworld-test-cb
   IMAGE: react-redux
   DEPLOYMENT_NAME: react-redux
   CHART_PATH: helmchartLab9/realworldchart    #path exists in the realworld repository, realworldchart folder contains the value.yml and chart.yml files
@@ -341,9 +341,9 @@ jobs:
       - name: Get RealWorld app from its repo
         uses: GuillaumeFalourd/clone-github-repo-action@v1
         with:
-          owner: 'Vidinci' 
-          repository: 'realworld-test-cm'
-          access-token: ${{ secrets.PAT }}  
+          owner: 'IntelligentLlama' 
+          repository: 'realworld-test-cb'
+          access-token: ${{ secrets.GITPASS }}  
       
         #====================================
         # Setup gcloud CLI
