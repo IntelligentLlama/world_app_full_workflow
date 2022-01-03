@@ -8,7 +8,9 @@ gcp_zone   = "us-central1-a"
 
 org         = "ycit"
 #environment = "dev"               #value to be prefixed to resources names to differentiate them
-bucket_name = "tf-bucket-devops" # Put the desired GCS Bucket name.
+# bucket_name = "tf-bucket-devops" # Put the desired GCS Bucket name.
+BUCK_NAME = ${{ secrets.BUCK_INFO }} # bucket info
+bucket_name = "$BUCK_NAME"
 
 #Network related
 
