@@ -36,7 +36,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.G_PROJ }}
   G_PROJ: ${{ secrets.G_PROJ }} 
-  # SERVICE_ACCOUNT: ${{ secrets.G_INFO }}
+  SERVICE_ACCOUNT: ${{ secrets.G_INFO }}
   G_INFO: ${{ secrets.G_INFO }}
   G_B_ACT: ${{ secrets.G_B_ACT }}
   GITHUB_SHA: ${{ github.sha }}
