@@ -342,10 +342,11 @@ jobs:
       - name: Get RealWorld app from its repo
         uses: GuillaumeFalourd/clone-github-repo-action@v1
         with:
-          owner: 'Vidinci' 
-          repository: 'realworld-test-cm'
+          owner: 'IntelligentLlama' 
+          repository: 'realwoldapp-helmapplication-javascript'
           access-token: ${{ secrets.GITPAT }}  
-      
+ 
+
         #====================================
         # Setup gcloud CLI
         #====================================      
