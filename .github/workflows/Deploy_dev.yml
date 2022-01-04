@@ -385,12 +385,13 @@ jobs:
      runs-on: ubuntu-latest
      environment: dev
      needs: Install_app_realworld
-     if: (${{ github.event.inputs.runapply == 'yes' }}
+     if: (${{ github.event.inputs.runapply == 'yes' }})
      steps:
         #====================================
         # Install realworld app helm chart
         #====================================
        - name: Install Helm chart react_redux
+         if: ${{ github.event.inputs.runapply == 'yes' }}
          uses: hahow/install-helm-chart-action@v1.0.3
          with:
            gcloud_auth_key: ${{ secrets.G_INFO }}
@@ -406,12 +407,15 @@ jobs:
 
       # Get info about the services deployed
        - name: Service info IP and port
+         if: ${{ github.event.inputs.runapply == 'yes' }}
          run: |
            echo "Use External IP and port 4100 to acces the application from the browser. ex. http://IP:4100"
            gcloud container clusters get-credentials $GKE_CLUSTER \
            --region $GKE_REGION \
            --project ${{ secrets.G_PROJ }}
            kubectl get services -o wide
-           )
- 
+        
+       - name: End
+         run: |
+          echo "====== ***** The End **** ===== "      
  
