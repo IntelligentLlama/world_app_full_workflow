@@ -384,7 +384,8 @@ jobs:
           release_name: ${{ env.DEPLOYMENT_NAME }} #react-redux
           chart_name: ${{ env.CHART_PATH }} 
           helm_upgrade_args: |
-               --set=image.tag=${{ env.GITHUB_SHA }}
+               # --set=image.tag=${{ env.GITHUB_SHA }}
+               --set=image.tag=d633740f911c353f0aa7540a1cd92a3ab5263355
 
       # Get info about the services deployed
       - name: Service info IP and port
