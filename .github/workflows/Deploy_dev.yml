@@ -344,7 +344,7 @@ jobs:
         with:
           owner: 'Vidinci' 
           repository: 'realworld-test-cm'
-          access-token: ${{ secrets.PAT }}  
+          access-token: ${{ secrets.GITPAT }}  
       
         #====================================
         # Setup gcloud CLI
