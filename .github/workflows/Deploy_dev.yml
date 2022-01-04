@@ -371,7 +371,7 @@ jobs:
            --tag "gcr.io/${{ secrets.G_PROJ }}/$IMAGE:${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_SHA="${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_REF="$GITHUB_REF" \
-           ./$APP_REPO_NAME/$IMAGE
+           ./$APP_REPO_NAME
            # .
            
         # Push the Docker image to Google Container Registry, for the real world app react-redux
