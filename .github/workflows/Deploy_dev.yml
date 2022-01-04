@@ -41,10 +41,10 @@ env:
   GKE_CLUSTER: gke-ycit-tformers-default-dev   #terraform output
   GKE_REGION: us-central1
   APP_REPO_OWNER: IntelligentLlama
-  APP_REPO_NAME: realworld-test-cb
+  APP_REPO_NAME: realwoldapp-helmapplication-javascript
   IMAGE: react-redux
   DEPLOYMENT_NAME: react-redux
-  CHART_PATH: ./react-redux-chart 
+  CHART_PATH: realwoldapp-helmapplication-javascript/react-redux-chart 
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -92,8 +92,6 @@ jobs:
           {"credentials": {"app.terraform.io": {"token": "$TFE_TOKEN"}}}
           EOF
           
-      #- run: cat ./run-modules/create-gke/.terraformrc
-
         #====================================#
         # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
         #====================================#
@@ -338,7 +336,16 @@ jobs:
       # Requires you create a GitHub personal Token 
       # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
      
-     
+        #====================================
+        # Clone repo having the Real World app
+        #====================================
+      - name: Get RealWorld app from its repo
+        uses: GuillaumeFalourd/clone-github-repo-action@v1
+        with:
+          owner: 'Vidinci' 
+          repository: 'realworld-test-cm'
+          access-token: ${{ secrets.PAT }}  
+      
         #====================================
         # Setup gcloud CLI
         #====================================      
@@ -363,7 +370,8 @@ jobs:
            --tag "gcr.io/${{ secrets.G_PROJ }}/$IMAGE:${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_SHA="${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_REF="$GITHUB_REF" \
-           .
+           ./$APP_REPO_NAME/$IMAGE
+           # .
            
         # Push the Docker image to Google Container Registry, for the real world app react-redux
       - name: Publish
