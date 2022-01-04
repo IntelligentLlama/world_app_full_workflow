@@ -44,7 +44,8 @@ env:
   APP_REPO_NAME: realworld-test-cb
   IMAGE: react-redux
   DEPLOYMENT_NAME: react-redux
-  CHART_PATH: helmchartLab9/realworldchart    #path exists in the realworld repository, realworldchart folder contains the value.yml and chart.yml files
+  CHART_PATH: ./react-redux-chart 
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:         
@@ -322,29 +323,22 @@ jobs:
         run: exit 1
 
   Install_app_realworld:
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs: terraform_apply
     environment: dev
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: 'Main Code checkout'
         uses: actions/checkout@v2
      
-     # Requires you create a GitHub personal Token 
-     # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+      # Requires you create a GitHub personal Token 
+      # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
      
-        #====================================
-        # Clone repo having the Real World app
-        #====================================
-      - name: Get RealWorld app from its repo
-        uses: GuillaumeFalourd/clone-github-repo-action@v1
-        with:
-          owner: 'IntelligentLlama' 
-          repository: 'realworld-test-cb'
-          access-token: ${{ secrets.GITPAT }}  
-      
+     
         #====================================
         # Setup gcloud CLI
         #====================================      
@@ -363,12 +357,14 @@ jobs:
         # Ex. in following command the Dockerfile is retrieved from the cloned repo under a folder named react-redux (same name as image name, it could have been different)
         #====================================      
       - name: Build
+        # if: (${{ github.event.inputs.runapply == 'yes' }})
         run: |-
           docker build \
            --tag "gcr.io/${{ secrets.G_PROJ }}/$IMAGE:${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_SHA="${{ env.GITHUB_SHA }}" \
            --build-arg GITHUB_REF="$GITHUB_REF" \
-           ./$APP_REPO_NAME/$IMAGE
+           .
+           
         # Push the Docker image to Google Container Registry, for the real world app react-redux
       - name: Publish
         run: |-
@@ -382,11 +378,11 @@ jobs:
         with:
           gcloud_auth_key: ${{ secrets.G_INFO }}
           gcloud_project_id: ${{ secrets.G_PROJ }}
-          cluster_name: ${{ env.GKE_CLUSTER }}  #'gke-tformers-tformers-default-dev'
+          cluster_name: ${{ env.GKE_CLUSTER }} 
           cluster_region: ${{ env.GKE_REGION }} # us-central1
           release_namespace: default
           release_name: ${{ env.DEPLOYMENT_NAME }} #react-redux
-          chart_name: ./${{ env.APP_REPO_NAME }}/${{ env.CHART_PATH }}  #./charts/realworldchart
+          chart_name: ${{ env.CHART_PATH }} 
           helm_upgrade_args: |
                --set=image.tag=${{ env.GITHUB_SHA }}
 
