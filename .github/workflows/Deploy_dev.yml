@@ -379,28 +379,39 @@ jobs:
         run: |-
           docker push "gcr.io/${{ secrets.G_PROJ }}/$IMAGE:${{ env.GITHUB_SHA }}"
 
+  Deploy_helm_apply:
+   
+   # run helm only if flag is yes
+     runs-on: ubuntu-latest
+     environment: dev
+     needs: Install_app_realworld
+     if: (${{ github.event.inputs.runapply == 'yes' }}
+     steps:
         #====================================
         # Install realworld app helm chart
-        #====================================      
-      - name: Install Helm chart react_redux
-        uses: hahow/install-helm-chart-action@v1.0.3
-        with:
-          gcloud_auth_key: ${{ secrets.G_INFO }}
-          gcloud_project_id: ${{ secrets.G_PROJ }}
-          cluster_name: ${{ env.GKE_CLUSTER }} 
-          cluster_region: ${{ env.GKE_REGION }} # us-central1
-          release_namespace: default
-          release_name: ${{ env.DEPLOYMENT_NAME }} #react-redux
-          chart_name: ${{ env.CHART_PATH }} 
-          helm_upgrade_args: |
+        #====================================
+       - name: Install Helm chart react_redux
+         uses: hahow/install-helm-chart-action@v1.0.3
+         with:
+           gcloud_auth_key: ${{ secrets.G_INFO }}
+           gcloud_project_id: ${{ secrets.G_PROJ }}
+           cluster_name: ${{ env.GKE_CLUSTER }} 
+           cluster_region: ${{ env.GKE_REGION }} # us-central1
+           release_namespace: default
+           release_name: ${{ env.DEPLOYMENT_NAME }} #react-redux
+           chart_name: ${{ env.CHART_PATH }} 
+           helm_upgrade_args: |
                # --set=image.tag=${{ env.GITHUB_SHA }}
-               --set=image.tag=d633740f911c353f0aa7540a1cd92a3ab5263355
+                --set=image.tag=d633740f911c353f0aa7540a1cd92a3ab5263355
 
       # Get info about the services deployed
-      - name: Service info IP and port
-        run: |
-          echo "Use External IP and port 4100 to acces the application from the browser. ex. http://IP:4100"
-          gcloud container clusters get-credentials $GKE_CLUSTER \
-          --region $GKE_REGION \
-          --project ${{ secrets.G_PROJ }}
-          kubectl get services -o wide
+       - name: Service info IP and port
+         run: |
+           echo "Use External IP and port 4100 to acces the application from the browser. ex. http://IP:4100"
+           gcloud container clusters get-credentials $GKE_CLUSTER \
+           --region $GKE_REGION \
+           --project ${{ secrets.G_PROJ }}
+           kubectl get services -o wide
+           )
+ 
+ 
